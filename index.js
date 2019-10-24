@@ -1,6 +1,25 @@
+require('dotenv').config();
 const { GraphQLServer } = require('graphql-yoga');
+const { importSchema } = require('graphql-import');
+const resolvers = require('./src/resolvers');
 
-const typeDefs = ` 
+const mongoose = require('mongoose');
+
+mongoose.connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true
+});
+
+const mongo = mongoose.connection;
+
+mongo.on('error', (error) => console.log(error))
+    .once('open', () => console.log('Connected to database'));
+
+const typeDefs = importSchema(__dirname + '/schema.graphql');
+
+
+/* ` 
     type Query{
         hello(name: String!):String!
         getAllUsers:[User]
@@ -15,9 +34,9 @@ const typeDefs = `
     }
  `;
 
- const users=[];
+const users=[];
 
- const resolvers = {
+const resolvers = {
     Query:{
         hello:(root, params, context, info) => `Hola ${params.name}`,
         getAllUsers:(root, params, context, info) => users,
@@ -33,8 +52,15 @@ const typeDefs = `
             return user;
         }
     }
- };
-
-const server = new GraphQLServer({ typeDefs, resolvers});
+}; */
+ 
+/* const schema = makeExecutableSchema({
+    typeDefs,
+    resolvers
+}); */
+const server = new GraphQLServer({
+    typeDefs,
+    resolvers
+});
 
 server.start(() => console.log('Works! :D'));

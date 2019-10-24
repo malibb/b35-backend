@@ -1,0 +1,35 @@
+
+
+type Query {
+    getAuthors:[Author]!
+}
+
+type Mutation{
+    createNewAuthor(data: AuthorInput!):Author!
+}
+
+type Author{
+    _id:ID!
+    first_name:String!
+    last_name:String!
+    email:String!
+    birth_date:String!
+    gender: GENDERS
+    profile_pic:String!
+}
+
+input AuthorInput{
+    first_name:String!
+    last_name:String!
+    email:String!
+    birth_date:String
+    gender: GENDERS
+    profile_pic:String
+}
+
+enum GENDERS {
+    M
+    F
+    O
+}
+
