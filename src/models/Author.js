@@ -37,7 +37,6 @@ const AuthorSchema = new Schema({
         type:Boolean,
         default:true
     }
-
 },{
     timestamps:true
 });
