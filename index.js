@@ -61,7 +61,7 @@ const schema = makeExecutableSchema({
     typeDefs,
     resolvers,
     schemaDirectives: {
-        auth: AuthDirective,
+        auth: AuthDirective
     },
 });
 

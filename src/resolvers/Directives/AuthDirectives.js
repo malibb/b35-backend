@@ -2,6 +2,7 @@ const { SchemaDirectiveVisitor } = require('graphql-tools');
 const { defaultFieldResolver } = require('graphql');
 
 class AuthDirective extends SchemaDirectiveVisitor{
+
     visitFieldDefinition(field){
         const { resolve = defaultFieldResolver } = field;
         field.resolve = async function (...args) { // root, params, context, info
@@ -13,6 +14,6 @@ class AuthDirective extends SchemaDirectiveVisitor{
             }
         };  
     }
-};
+}
 
 module.exports = AuthDirective;

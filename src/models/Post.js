@@ -14,7 +14,6 @@ const PostSchema = new Schema({
     author: {
         type: Schema.Types.ObjectId,
         ref: 'author',
-        unique: true,
     },
     cover_photo: {
         type: String

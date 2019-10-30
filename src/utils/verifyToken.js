@@ -10,6 +10,7 @@ const verifyToken = async req => {
             if(!payload) return req;
             const user = getAuthorByEmail(payload.email);
             if (!user) return req;
+            return user;
         } else {
             return {};
         }
