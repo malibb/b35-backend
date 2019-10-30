@@ -8,8 +8,8 @@ const getAuthors = async () => {
     return authors;
 };
 
-const getSingleAuthor = async (_, params) => {
-    const author = await getOneAuthor(params.id);
+const getSingleAuthor = async (_, { id }) => {
+    const author = await getOneAuthor(id);
     if(!author) throw new Error('Author not exist');
     return author;
 };

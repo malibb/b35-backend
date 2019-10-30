@@ -1,7 +1,10 @@
 require('dotenv').config();
-const { GraphQLServer } = require('graphql-yoga');
+const { GraphQLServer, PubSub } = require('graphql-yoga');
 const { importSchema } = require('graphql-import');
+const { makeExecutableSchema } = require('graphql-tools');
 const resolvers = require('./src/resolvers');
+const AuthDirective = require('./src/resolvers/Directives/AuthDirectives');
+const verifyToken = require('./src/utils/verifyToken');
 
 const mongoose = require('mongoose');
 
@@ -54,13 +57,27 @@ const resolvers = {
     }
 }; */
  
-/* const schema = makeExecutableSchema({
+const schema = makeExecutableSchema({
     typeDefs,
-    resolvers
-}); */
-const server = new GraphQLServer({
-    typeDefs,
-    resolvers
+    resolvers,
+    schemaDirectives: {
+        auth: AuthDirective,
+    },
 });
 
-server.start(() => console.log('Works! :D'));
+const port = process.env.PORT || 4000;
+
+const pubsub = new PubSub();
+
+const server = new GraphQLServer({
+    schema,
+    context: async (req) => ({
+        ...req,
+        pubsub,
+        user: req.request ? await verifyToken(req.request) : { }
+    })
+});
+
+server.start({ port },() => console.log(`Works! :D in port ${port}`));
+
+module.exports = { schema };
