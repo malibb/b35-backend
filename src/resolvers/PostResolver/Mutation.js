@@ -18,8 +18,8 @@ const createNewPost = async (_, { data }) => {
 const updateOnePost = async (_, {
     id,
     data
-}) => {
-    const post = await updatePost(id, data);
+},{user}) => {
+    const post = await updatePost(id, data, user);
     if (!post) throw new Error('Post not exist');
     return post;
 };
