@@ -12,7 +12,7 @@ const verifyToken = async req => {
             if (!user) return req;
             return user;
         } else {
-            return {};
+            return ;
         }
     } catch (e) {
         throw new Error(e.message);
