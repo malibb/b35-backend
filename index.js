@@ -8,7 +8,10 @@ const verifyToken = require('./src/utils/verifyToken');
 
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.MONGO_URL, {
+const MONGO_URI = process.env.NODE_ENV === 'test' ?
+    process.env.MONGO_TEST_URL: process.env.MONGO_URL;
+
+mongoose.connect(MONGO_URI, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true
@@ -17,7 +20,7 @@ mongoose.connect(process.env.MONGO_URL, {
 const mongo = mongoose.connection;
 
 mongo.on('error', (error) => console.log(error))
-    .once('open', () => console.log('Connected to database'));
+    .once('open', () => {});
 
 const typeDefs = importSchema(__dirname + '/schema.graphql');
 
@@ -78,6 +81,6 @@ const server = new GraphQLServer({
     })
 });
 
-server.start({ port },() => console.log(`Works! :D in port ${port}`));
+server.start({ port },() => {});
 
 module.exports = { schema };
