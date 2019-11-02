@@ -5,7 +5,7 @@ const {
 } = require('../../services/PostService');
 const storage = require('./../../utils/storage');
 
-const createNewPost = async (_, { data }, { user }) => {
+const createNewPost = async (_, { data }, { user, pubsub }) => {
     data.author = user._id;
     console.log(user);
     if (data.cover_photo){
@@ -18,6 +18,12 @@ const createNewPost = async (_, { data }, { user }) => {
     const post = await createPost(data);
     user.posts.push(post._id);
     user.save();
+    pubsub.publish('post', {
+        post:{
+            mutation: 'CREATED',
+            data: post,
+        }
+    });
     return post;
 };
 
@@ -33,9 +39,15 @@ const updateOnePost = async (_, {id,data}, { user }) => {
     return post;
 };
 
-const deleteOnePost = async (_, { id }, { user }) => {
+const deleteOnePost = async (_, { id }, { user, pubsub }) => {
     const post = await deletePost(id, user);
     if (!post) throw new Error('Post not exist');
+    pubsub.publish('post', {
+        post: {
+            mutation: 'DELETED',
+            data: post,
+        }
+    });
     return 'Post deleted';
 };
 

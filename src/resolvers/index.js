@@ -1,5 +1,6 @@
 const AuthorResolver = require('./AuthorResolvers');
 const PostResolver = require('./PostResolver');
+const { post } = require('./Subscriptions');
 const {
     EmailAddressResolver,
     URLResolver,
@@ -16,5 +17,8 @@ module.exports = {
     Mutation:{
         ...AuthorResolver.Mutation,
         ...PostResolver.Mutation
+    },
+    Subscription:{
+        post
     }
 };

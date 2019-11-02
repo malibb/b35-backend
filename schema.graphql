@@ -20,6 +20,15 @@ type Mutation {
     login(email:EmailAddress!, password:String):Auth!
 }
 
+type Subscription{
+    post: PostSubscriptionPayload!
+}
+
+type PostSubscriptionPayload{
+    mutation:String!
+    data:Post!
+}
+
 type Auth{
     token:String!
     message:String!
