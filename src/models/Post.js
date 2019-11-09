@@ -15,7 +15,7 @@ const PostSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'author',
     },
-    cover_photo: {
+    cover: {
         type: String
     },
     likes:{

@@ -8,11 +8,11 @@ const storage = require('./../../utils/storage');
 const createNewPost = async (_, { data }, { user }) => {
     data.author = user._id;
     console.log(user);
-    if (data.cover_photo){
-        const { createReadStream } = await data.cover_photo;
+    if (data.cover){
+        const { createReadStream } = await data.cover;
         const stream = createReadStream();
         const image = await storage({stream});
-        data = { ...data, cover_photo: image.url};
+        data = { ...data, cover: image.url};
     }
 
     const post = await createPost(data);
@@ -23,11 +23,11 @@ const createNewPost = async (_, { data }, { user }) => {
 
 const updateOnePost = async (_, {id,data}, { user }) => {
     const post = await updatePost(id, data);
-    if (data.cover_photo){
-        const { createReadStream } = await data.cover_photo;
+    if (data.cover){
+        const { createReadStream } = await data.cover;
         const stream = createReadStream();
         const image = await storage({stream});
-        data = { ...data, cover_photo: image.url, user};
+        data = { ...data, cover: image.url, user};
     }
     if (!post) throw new Error('Post not exist');
     return post;

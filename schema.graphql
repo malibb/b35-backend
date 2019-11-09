@@ -18,7 +18,7 @@ type Mutation {
     createNewPost(data: PostInput!):Post!@auth
     updateOnePost(id:ID!, data: PostUpdateInput!):Post!@auth
     deleteOnePost(id:ID!):String!@auth
-    login(email:EmailAddress!, password:String):Auth!
+    login(email:EmailAddress!, password:String!):Auth!
 }
 
 type Subscription{
@@ -40,7 +40,7 @@ type Post{
     title:String!
     content:String!
     author:Author!
-    cover_photo:URL!
+    cover:URL!
     liked_by: [Author]!
 }
 
@@ -58,7 +58,7 @@ input PostInput{
     title:String!
     content:String!
     #author:String!
-    cover_photo:Upload
+    cover:Upload
 }
 
 input AuthorInput{
@@ -74,7 +74,7 @@ input AuthorInput{
 input PostUpdateInput{
     title:String
     content:String
-    cover_photo:URL
+    cover:URL
     liked_by: String
     is_active:Boolean
 }
