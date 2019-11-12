@@ -57,7 +57,7 @@ type Author{
 input PostInput{
     title:String!
     content:String!
-    author:String
+    #author:String
     cover:Upload
 }
 
