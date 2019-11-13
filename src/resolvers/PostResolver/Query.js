@@ -4,7 +4,7 @@ const {
 } = require('../../services/PostService');
 
 const getPosts = async () => {
-    const posts = await getAllPosts().populate('author');
+    const posts = await getAllPosts();
     return posts;
 };
 

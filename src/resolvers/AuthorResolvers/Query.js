@@ -15,6 +15,7 @@ const getSingleAuthor = async (_, { id }) => {
 };
 
 const me = async(root, params, { user }) => {
+    console.log(user);
     const author = await getOneAuthor(user._id);
     return author;
 };
