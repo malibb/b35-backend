@@ -8,7 +8,7 @@ type Query {
     getAuthors:[Author]!
     getSinglePost(id:ID):Post!
     getPosts:[Post]!
-    me:Author!@auth
+    me:Author!
 }
 
 type Mutation {
@@ -42,6 +42,7 @@ type Post{
     author:Author!
     cover:URL
     liked_by: [Author]
+    is_active: Boolean
 }
 
 type Author{
@@ -50,6 +51,7 @@ type Author{
     last_name:String!
     email:EmailAddress!
     birth_date:String!
+    posts:[Post]!
     gender: GENDERS
     profile_pic:URL!
 }
@@ -74,7 +76,7 @@ input AuthorInput{
 input PostUpdateInput{
     title:String
     content:String
-    cover:URL
+    cover:Upload
     liked_by: String
     is_active:Boolean
 }
