@@ -68,7 +68,6 @@ const schema = makeExecutableSchema({
 const port = process.env.PORT || 4000;
 
 const pubsub = new PubSub();
-
 const server = new GraphQLServer({
     schema,
     context: async (req) => ({
